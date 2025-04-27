@@ -1,6 +1,6 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
--- Only required if you have packer configured as `opt`
+-- Only  required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
@@ -24,7 +24,7 @@ return require('packer').startup(function(use)
 
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
   use('nvim-treesitter/playground')
-
+ 
   use ({
 	  "ThePrimeagen/harpoon",
 	  branch = "harpoon2",
@@ -32,6 +32,7 @@ return require('packer').startup(function(use)
   })
   use('mbbill/undotree')
   use('tpope/vim-fugitive')
+  use('fatih/vim-go', {run=':GoUpdateBinaries'})
 
   use ({
 	  'VonHeikemen/lsp-zero.nvim',

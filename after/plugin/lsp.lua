@@ -9,7 +9,6 @@ local lsp = require('lsp-zero').preset({
 lsp.nvim_workspace()
 
 lsp.ensure_installed({
-	'tsserver',
 	'eslint',
 	'lua_ls',
 	'rust_analyzer',
@@ -32,8 +31,8 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts) -- show quick description of the selected symbol
 	vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts) -- view workspace symbol
 	vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts) -- view definition on a floating window
-	vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts) -- goto next diagnostic
-	vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts) -- goto previous diagnostic
+	vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = 1}) end, opts) -- goto next diagnostic
+	vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = -1}) end, opts) -- goto previous diagnostic
 	vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts) -- view code action
 	vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts) -- search references
 	vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts) -- rename symbol
