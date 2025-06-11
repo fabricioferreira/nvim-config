@@ -34,27 +34,21 @@ return require('packer').startup(function(use)
   use('tpope/vim-fugitive')
   use('fatih/vim-go', {run=':GoUpdateBinaries'})
 
-  use ({
-	  'VonHeikemen/lsp-zero.nvim',
-	  branch = 'v1.x',
-	  requires = {
-		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},             -- Required
-		  {'williamboman/mason.nvim'},           -- Optional
-		  {'williamboman/mason-lspconfig.nvim'}, -- Optional
+  -- LSP Support
+  use({'neovim/nvim-lspconfig'})             -- Required
+  use({'williamboman/mason.nvim'})           -- Optional
+  use({'williamboman/mason-lspconfig.nvim'}) -- Optional
 
-		  -- Autocompletion
-		  {'hrsh7th/nvim-cmp'},         -- Required
-		  {'hrsh7th/cmp-nvim-lsp'},     -- Required
-		  {'hrsh7th/cmp-buffer'},       -- Optional
-		  {'hrsh7th/cmp-path'},         -- Optional
-		  {'saadparwaiz1/cmp_luasnip'}, -- Optional
-		  {'hrsh7th/cmp-nvim-lua'},     -- Optional
+  -- Autocompletion
+  use({'hrsh7th/nvim-cmp'})         -- Required
+  use({'hrsh7th/cmp-nvim-lsp'})     -- Required
+  use({'hrsh7th/cmp-buffer'})       -- Optional
+  use({'hrsh7th/cmp-path'})         -- Optional
+  use({'saadparwaiz1/cmp_luasnip'}) -- Optional
+  use({'hrsh7th/cmp-nvim-lua'})     -- Optional
 
-		  -- Snippets
-		  {'L3MON4D3/LuaSnip'},             -- Required
-		  {'rafamadriz/friendly-snippets'}, -- Optional
-	  }
-  })
+  -- Snippets
+  use({'L3MON4D3/LuaSnip'})             -- Required
+  use({'rafamadriz/friendly-snippets'}) -- Optional
 
 end)
