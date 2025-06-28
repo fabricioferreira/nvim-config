@@ -18,7 +18,11 @@ return require('packer').startup(function(use)
 
   use('BurntSushi/ripgrep')
   use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.8',
+      'nvim-telescope/telescope-fzf-native.nvim',
+      run = 'make'
+  }
+  use {
+      'nvim-telescope/telescope.nvim', tag = '0.1.8',
 	  -- or                            , branch = '0.1.x',
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
@@ -67,10 +71,21 @@ return require('packer').startup(function(use)
   -- commenting
   use("numToStr/Comment.nvim")
 
+  -- file explorer
+  use("nvim-tree/nvim-tree.lua")
+
+  -- icons
+  use("nvim-tree/nvim-web-devicons")
+
+  -- lualine
+  use {
+      "nvim-lualine/lualine.nvim",
+      requires = { "nvim-tree/nvim-web-devicons", opt = true }
+  }
+
   if packer_bootstrap then
     require("packer").sync()
   end
-
 end)
 
 
