@@ -15,4 +15,4 @@ require('mason-lspconfig').setup({
         'eslint',
     },
     automatic_installation = true,
-}) 
+})

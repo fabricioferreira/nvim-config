@@ -22,3 +22,14 @@ vim.keymap.set("n", "<leader>Y", "\"+Y")
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
+vim.keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
+vim.keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
+vim.keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal size
+vim.keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
+
+vim.keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
+vim.keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
+vim.keymap.set("n", "<leader>tn", ":tabn<CR>") -- goto next tab
+vim.keymap.set("n", "<leader>tp", ":tabp<CR>") -- goto previous tab
+
+vim.keymap.set("n", "<leader>term", ":terminal<CR>i<CR>")
