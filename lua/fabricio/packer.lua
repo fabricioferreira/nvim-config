@@ -28,10 +28,10 @@ return require('packer').startup(function(use)
   }
 
   use({
-	  'rose-pine/neovim',
-	  as = 'rose-pine',
+	  'christianchiarulli/nvcode-color-schemes.vim',
+	  as = 'nvcode',
 	  config = function()
-		  vim.cmd('colorscheme rose-pine')
+		  vim.cmd('colorscheme nvcode')
 	  end
   })
 
@@ -82,6 +82,8 @@ return require('packer').startup(function(use)
       "nvim-lualine/lualine.nvim",
       requires = { "nvim-tree/nvim-web-devicons", opt = true }
   }
+
+  use("jlcrochet/vim-cs")
 
   if packer_bootstrap then
     require("packer").sync()

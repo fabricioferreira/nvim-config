@@ -33,3 +33,5 @@ vim.keymap.set("n", "<leader>tn", ":tabn<CR>") -- goto next tab
 vim.keymap.set("n", "<leader>tp", ":tabp<CR>") -- goto previous tab
 
 vim.keymap.set("n", "<leader>term", ":terminal<CR>i<CR>")
+
+vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")

@@ -13,6 +13,9 @@ require('mason-lspconfig').setup({
         'lua_ls',
         'rust_analyzer',
         'eslint',
+        'csharp_ls',
+        'gopls',
+        'ts_ls',
     },
     automatic_installation = true,
 })
