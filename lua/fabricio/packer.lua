@@ -85,6 +85,14 @@ return require('packer').startup(function(use)
 
   use("jlcrochet/vim-cs")
 
+  -- Formatting
+  use {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    requires = "nvim-lspconfig"
+  }
+
   if packer_bootstrap then
     require("packer").sync()
   end

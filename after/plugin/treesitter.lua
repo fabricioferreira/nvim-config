@@ -1,4 +1,4 @@
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
   ensure_installed = { "javascript", "c", "lua", "rust", "go", "c_sharp", "typescript", "vim", "markdown", "markdown_inline" },
 
@@ -17,6 +17,9 @@ require'nvim-treesitter.configs'.setup {
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
+  },
+  indent = {
+    enabled = true
   },
   modules = {},
   ignore_install = {}

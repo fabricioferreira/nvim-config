@@ -35,3 +35,6 @@ vim.keymap.set("n", "<leader>tp", ":tabp<CR>") -- goto previous tab
 vim.keymap.set("n", "<leader>term", ":terminal<CR>i<CR>")
 
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
+vim.keymap.set("n", "<leader>ef", ":NvimTreeFocus<CR>")
+
+vim.keymap.set("n", "<leader>vb", "<C-v>") -- Visual Block Mode
