@@ -9,7 +9,14 @@ local api = require("nvim-tree.api");
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
-nvimtree.setup()
+nvimtree.setup({
+  git = {
+    ignore = false
+  },
+  filters = {
+    custom = { "^\\.git" }
+  }
+})
 
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()

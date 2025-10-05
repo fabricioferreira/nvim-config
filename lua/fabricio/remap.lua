@@ -37,4 +37,7 @@ vim.keymap.set("n", "<leader>term", ":terminal<CR>i<CR>")
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 vim.keymap.set("n", "<leader>ef", ":NvimTreeFocus<CR>")
 
-vim.keymap.set("n", "<leader>vb", "<C-v>") -- Visual Block Mode
+vim.keymap.set("n", "<leader>vb", "<C-v>") -- VISUAL BLOCK
+
+-- git diff binding
+vim.keymap.set("n", "<leader>diff", ":Gdiff<CR>")
