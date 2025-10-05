@@ -26,6 +26,7 @@ lualine_nightfly.command = {
 
 lualine.setup({
     options = {
-        theme = lualine_nightfly
-    }
+        theme = lualine_nightfly,
+        icons_enabled = true
+    },
 })
