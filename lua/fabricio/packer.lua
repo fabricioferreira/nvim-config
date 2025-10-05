@@ -96,12 +96,6 @@ return require('packer').startup(function(use)
     requires = "nvim-lspconfig"
   }
 
-  use { "zapling/mason-conform.nvim",
-    config = function()
-      require("mason-conform").setup({ ignore_install = { 'prettier' } })
-    end
-  }
-
   if packer_bootstrap then
     require("packer").sync()
   end
