@@ -88,9 +88,6 @@ return require('packer').startup(function(use)
   -- Formatting
   use {
     "stevearc/conform.nvim",
-    config = function()
-      require("conform").setup()
-    end,
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     requires = "nvim-lspconfig"

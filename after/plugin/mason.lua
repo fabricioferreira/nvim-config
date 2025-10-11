@@ -16,6 +16,7 @@ require('mason-lspconfig').setup({
         'csharp_ls',
         'gopls',
         'ts_ls',
+        'svelte',
     },
     automatic_installation = true,
 })

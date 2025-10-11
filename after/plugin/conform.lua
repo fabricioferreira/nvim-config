@@ -8,12 +8,15 @@ conform.setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		cs = { "csharpier" },
-		rust = { "rustfmt", lsp_format = "fallback" },
+		rust = { "rustfmt" },
 		go = { "goimports", "gofmt" },
-		svelte = { "prettier-plugin-svelte" },
+		svelte = { "prettier" },
 		css = { "prettier" },
 		html = { "prettier" },
 		typescript = { "prettier" },
+		javascript = { "prettier" },
+		typescriptreact = { "prettier" },
+		javascriptreact = { "prettier" },
 	},
 	format_on_save = {
 		lsp_fallback = true,
@@ -24,6 +27,9 @@ conform.setup({
 			command = "dotnet-csharpier",
 			args = { "--write-stdout" },
 			stdin = true,
+		},
+		prettier = {
+			prepend_args = { "--plugin-search-dir=." },
 		},
 	},
 })

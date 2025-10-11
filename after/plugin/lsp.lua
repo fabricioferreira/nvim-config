@@ -57,6 +57,13 @@ vim.lsp.config('eslint', {
   capabilities = capabilities,
 })
 
+vim.lsp.config('svelte', {
+  cmd = { 'svelte-language-server', '--stdio' },
+  filetypes = { 'svelte' },
+  root_markers = { 'svelte.config.js', 'svelte.config.cjs', 'svelte.config.ts', 'package.json', '.git' },
+  capabilities = capabilities,
+})
+
 vim.lsp.config('omnisharp', {
   cmd = {
     "˜/.local/omnisharp/OmniSharp",
@@ -73,10 +80,12 @@ vim.lsp.config('omnisharp', {
   analyze_open_documents_only = false,
 });
 
+
 -- Enable the language servers
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('eslint')
+vim.lsp.enable('svelte')
 
 -- Set up nvim-cmp
 local cmp = require('cmp')
