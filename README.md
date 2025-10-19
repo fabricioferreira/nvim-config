@@ -48,6 +48,7 @@ Leader is `<Space>`. Selected highlights:
 - Harpoon: `<leader>a` add, `<C-e>` toggle Telescope picker, `<C-h/j/k/l>` quick slots, `<C-S-P/N>` cycle the list.
 - Undo tree: `<leader>u`; terminal: `<leader>term`.
 - Clipboard helpers: `<leader>p` (paste without clobber), `<leader>y`/`<leader>Y`, `<C-c>` exits insert mode.
+- Formatting: `<leader>f` (Conform) and `<leader>vcf` (Conform with LSP fallback) reformat the current buffer.
 - Git: `<leader>gs` (status), `<leader>diff` (diff split).
 - Movement tweaks: `J`/`K` in visual mode move lines, `<C-d>/<C-u>` keep cursor centered, `n`/`N` keep search results centered, `J` in normal mode joins lines without moving the cursor.
 
@@ -78,8 +79,8 @@ Completion is handled by `nvim-cmp` with LuaSnip and buffer/path sources. The LS
 
 `after/plugin/conform.lua` wires formatters:
 
-- `stylua`, `csharpier`, `rustfmt`, `goimports` + `gofmt`, Prettier for the web stack (with `--plugin-search-dir=.`).
-- `<leader>f` formats the current buffer (async, falls back to LSP on errors).
+- `stylua`, `csharpier`, `rustfmt`, `goimports` + `gofmt`, Prettier for Svelte and the broader JS/TS/CSS/HTML stack (runs from the project root so local plugins like `prettier-plugin-svelte` are picked up automatically).
+- `<leader>f` uses Conform directly; `<leader>vcf` invokes the same formatter, falling back to LSP when Prettier is unavailable.
 
 ## Notes
 

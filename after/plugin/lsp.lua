@@ -157,7 +157,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)       -- search references
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)           -- rename symbol
     vim.keymap.set("n", "<leader>vh", function() vim.lsp.buf.signature_help() end, opts)    -- help with the highlighted signature
-    vim.keymap.set("n", "<leader>vcf", function() vim.lsp.buf.format() end, opts)           -- Format code
+    vim.keymap.set("n", "<leader>vcf", function()
+      local ok, conform_mod = pcall(require, "conform")
+      if ok then
+        conform_mod.format({ async = true, lsp_fallback = true, bufnr = ev.buf })
+        return
+      end
+      vim.lsp.buf.format({ async = true })
+    end, opts)                                                                               -- Format code
   end,
 })
 
