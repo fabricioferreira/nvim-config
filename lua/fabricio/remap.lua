@@ -41,3 +41,13 @@ vim.keymap.set("n", "<leader>vb", "<C-v>") -- VISUAL BLOCK
 
 -- git diff binding
 vim.keymap.set("n", "<leader>diff", ":Gdiff<CR>")
+
+-- RSpec: run current file (only for Ruby files)
+vim.keymap.set("n", "<leader>ur", function()
+  if vim.bo.filetype == "ruby" then
+    local file = vim.fn.expand("%")
+    vim.cmd("!bundle exec rspec " .. file)
+  else
+    print("RSpec can only be run on Ruby files")
+  end
+end, { desc = "Run RSpec on current file" })

@@ -158,6 +158,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)           -- rename symbol
     vim.keymap.set("n", "<leader>vh", function() vim.lsp.buf.signature_help() end, opts)    -- help with the highlighted signature
     vim.keymap.set("n", "<leader>vcf", function()
+      -- Try custom formatters first
+      local custom_formatters = require("fabricio.formatters")
+      if custom_formatters.format() then
+        return
+      end
+      -- Fall back to Conform or LSP
       local ok, conform_mod = pcall(require, "conform")
       if ok then
         conform_mod.format({ async = true, lsp_fallback = true, bufnr = ev.buf })

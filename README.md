@@ -10,8 +10,9 @@ This setup lives in `~/.config/nvim` and is loaded from `init.lua`, which simply
   - `remap.lua` → all custom key bindings.
   - `set.lua` → editor options (UI, tabs, search, undo, etc.).
   - `packer.lua` → plugin list and bootstrap logic.
-  - `formatters/` → custom formatter configurations.
-    - `rubocop.lua` → Rubocop formatter using bundle exec.
+  - `formatters/` → custom formatter implementations.
+    - `init.lua` → Generic formatter system that auto-registers formatters.
+    - `ruby.lua` → Ruby formatter using rubyfmt (opinionated, minimal config).
 - `after/plugin/` → per-plugin configuration (telescope, nvim-tree, lualine, LSP, conform, etc.).
 
 ## Plugin Management
@@ -53,6 +54,7 @@ Leader is `<Space>`. Selected highlights:
 - **Clipboard helpers**: `<leader>p` (paste without clobber in visual/select mode), `<leader>y`/`<leader>Y` (yank to system clipboard), `<C-c>` (exit insert mode), `Y` (yank to end of line).
 - **Formatting**: `<leader>f` (Conform with LSP fallback).
 - **Git**: `<leader>gs` (Git status), `<leader>diff` (Git diff split).
+- **Testing**: `<leader>ur` (run RSpec on current file - Ruby files only).
 - **Movement tweaks**: `J`/`K` in visual mode move lines up/down, `<C-d>/<C-u>` keep cursor centered, `n`/`N` keep search results centered, `J` in normal mode joins lines without moving cursor.
 
 ## Colors & UI
@@ -106,17 +108,19 @@ Diagnostics display virtual text, signs, underlines with custom Nerd Font icons 
 - **Rust**: `rustfmt`
 - **Go**: `goimports` + `gofmt`
 - **Svelte/CSS/HTML/JS/TS**: `prettier` (searches for plugins in project root, detects project via package.json, lock files, or svelte.config files)
-- **Ruby**: `rubocop` (via bundle exec, defined in `lua/fabricio/formatters/rubocop.lua`)
+- **Ruby**: `rubyfmt` (via custom formatter system, opinionated formatter with minimal config)
 - **ERB**: `erb_format`
 
-Format on save is enabled with LSP fallback and 2-second timeout. `<leader>f` triggers manual formatting with Conform (async, with LSP fallback).
+Format on save is enabled for all languages except Ruby (which uses manual formatting only) with LSP fallback and 2-second timeout. `<leader>f` and `<leader>vcf` trigger manual formatting - they first check for custom formatters (defined in `lua/fabricio/formatters/`), then fall back to Conform with LSP fallback. The custom formatter system auto-registers all formatter configurations on startup.
 
 ## Notes
 
 - `vim.opt.clipboard` append assumes Neovim is built with clipboard support.
 - The nvcode colorscheme is set directly in `after/plugin/colors.lua` with transparent backgrounds.
 - Update the OmniSharp path in `after/plugin/lsp.lua` if the binary lives elsewhere (note: there's a typo in the path using `˜` instead of `~`), and ensure the executable is marked as runnable. You'll need to manually enable it with `vim.lsp.enable('omnisharp')`.
-- Conform expects these binaries on your `PATH`: `stylua`, `dotnet-csharpier`, `rustfmt`, `goimports`, `gofmt`, `prettier`, `erb_format`, and `bundle` (for rubocop).
+- Conform expects these binaries on your `PATH`: `stylua`, `dotnet-csharpier`, `rustfmt`, `goimports`, `gofmt`, `prettier`, and `erb_format`.
+- Custom formatters expect: `rubyfmt` for Ruby formatting. Note: `rubyfmt` is opinionated and doesn't support `.rubocop.yml` configuration.
+- To add a new custom formatter, create a new file in `lua/fabricio/formatters/` that returns a table with `filetype`, `command`, `name`, and optionally `args` fields. It will be auto-registered on startup.
 - Harpoon uses version 2 (harpoon2 branch) with both quick menu (`<C-E>`) and Telescope integration (`<C-e>`).
 - Comment.nvim is enabled with default settings for easy code commenting.
 
