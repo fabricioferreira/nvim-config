@@ -58,7 +58,7 @@ vim.lsp.config('eslint', {
 })
 
 vim.lsp.config('svelte', {
-  cmd = { 'svelte-language-server', '--stdio' },
+  cmd = { 'svelteserver', '--stdio' },
   filetypes = { 'svelte' },
   root_markers = { 'svelte.config.js', 'svelte.config.cjs', 'svelte.config.ts', 'package.json', '.git' },
   capabilities = capabilities,
