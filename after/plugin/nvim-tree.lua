@@ -15,7 +15,13 @@ nvimtree.setup({
   },
   filters = {
     custom = { "^\\.git" }
-  }
+  },
+  renderer = {
+    highlight_opened_files = "all",
+    highlight_modified = "icon",
+  },
+  hijack_cursor = false,
+  update_focused_file = {},
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {

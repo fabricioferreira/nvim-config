@@ -2,7 +2,7 @@ local ok, conform = pcall(require, "conform")
 local util = ok and require("conform.util")
 
 if not ok then
-	return
+  return
 end
 
 conform.setup({
@@ -18,6 +18,8 @@ conform.setup({
 		javascript = { "prettier" },
 		typescriptreact = { "prettier" },
 		javascriptreact = { "prettier" },
+		ruby = { "rubocop" },
+		eruby = { "erb_format" },
 	},
 	format_on_save = {
 		lsp_fallback = true,
@@ -29,6 +31,7 @@ conform.setup({
 			args = { "--write-stdout" },
 			stdin = true,
 		},
+		rubocop = require("fabricio.formatters.rubocop"),
 		prettier = {
 			prepend_args = { "--plugin-search-dir=." },
 			cwd = util.root_file({
@@ -48,5 +51,5 @@ conform.setup({
 })
 
 vim.keymap.set({ "", "n", "v" }, "<leader>f", function()
-	conform.format({ async = true, lsp_fallback = true })
+  conform.format({ async = true, lsp_fallback = true })
 end, { desc = "Format buffer" })
