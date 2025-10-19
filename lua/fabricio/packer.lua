@@ -60,6 +60,8 @@ return require('packer').startup(function(use)
   use({ 'saadparwaiz1/cmp_luasnip' }) -- Optional
   use({ 'hrsh7th/cmp-nvim-lua' })     -- Optional
 
+  use({ 'evanleck/vim-svelte' }) -- optional - for svelte
+
   -- Snippets
   use({ 'L3MON4D3/LuaSnip' })             -- Required
   use({ 'rafamadriz/friendly-snippets' }) -- Optional
