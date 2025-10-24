@@ -8,7 +8,9 @@ require('mason').setup({
     }
 })
 
-require('mason-lspconfig').setup({
+local mason_config = require('mason-lspconfig')
+
+mason_config.setup({
     ensure_installed = {
         'lua_ls',
         'rust_analyzer',
@@ -17,6 +19,7 @@ require('mason-lspconfig').setup({
         'gopls',
         'ts_ls',
         'svelte',
+        'ruby_lsp',
     },
     automatic_installation = true,
 })

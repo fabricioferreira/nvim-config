@@ -2,6 +2,8 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
+local util = require('lspconfig.util')
+
 -- Configure language servers
 vim.lsp.config('lua_ls', {
   cmd = { 'lua-language-server' },
@@ -80,12 +82,20 @@ vim.lsp.config('omnisharp', {
   analyze_open_documents_only = false,
 });
 
+vim.lsp.config('ruby_lsp', {
+  cmd = { 'ruby-lsp' },
+  filetypes = { 'ruby', 'eruby' },
+  root_markers = { 'Gemfile', '.git' },
+  single_file_support = true,
+})
+
 
 -- Enable the language servers
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('eslint')
 vim.lsp.enable('svelte')
+vim.lsp.enable('ruby_lsp')
 
 -- Set up nvim-cmp
 local cmp = require('cmp')

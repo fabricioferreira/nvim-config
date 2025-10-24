@@ -1,6 +1,6 @@
 -- Custom formatter configuration for Ruby
-return {
-  filetype = "ruby",
-  command = "rubyfmt",
-  name = "rubyfmt",
-}
+-- return {
+--   filetype = "ruby",
+--   command = "rubyfmt",
+--   name = "rubyfmt",
+-- }
