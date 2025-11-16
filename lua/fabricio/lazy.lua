@@ -61,6 +61,7 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
+    lazy = false,
   },
   {
     "nvim-lualine/lualine.nvim",
