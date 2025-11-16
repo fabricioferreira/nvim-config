@@ -17,9 +17,10 @@ mason_config.setup({
         'eslint',
         'csharp_ls',
         'gopls',
+        'kotlin_language_server',
+        'jdtls',
         'ts_ls',
         'svelte',
-        'ruby_lsp',
     },
     automatic_installation = true,
 })

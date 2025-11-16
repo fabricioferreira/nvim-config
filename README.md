@@ -6,14 +6,15 @@ This setup lives in `~/.config/nvim` and is loaded from `init.lua`, which simply
 
 - `init.lua` → requires the Lua module that bootstraps the rest of the config.
 - `lua/fabricio/`
-  - `init.lua` → pulls in remaps, options, and plugin definitions.
+  - `init.lua` → pulls in remaps, options, plugins, and formatter bootstrap.
   - `remap.lua` → all custom key bindings.
   - `set.lua` → editor options (UI, tabs, search, undo, etc.).
   - `packer.lua` → plugin list and bootstrap logic.
   - `formatters/` → custom formatter implementations.
-    - `init.lua` → Generic formatter system that auto-registers formatters.
-    - `ruby.lua` → Ruby formatter using rubyfmt (opinionated, minimal config).
+    - `init.lua` → generic formatter system that auto-registers modules in this directory.
+    - `ruby.lua` → commented example showing how to register `rubyfmt`.
 - `after/plugin/` → per-plugin configuration (telescope, nvim-tree, lualine, LSP, conform, etc.).
+- `ftplugin/java.lua` → on-attaching Java helper that configures `jdtls` for Gradle/Maven/git projects.
 
 ## Plugin Management
 
@@ -21,12 +22,12 @@ Packer installs itself on first load (`lua/fabricio/packer.lua`) and manages the
 
 Highlighted plugins:
 
-- **UI & Navigation**: `nvcode` colorscheme, `nvim-tree`, `nvim-web-devicons`, `nvim-lualine/lualine.nvim`, `harpoon` (branch harpoon2), `undotree`.
-- **Search**: `telescope.nvim` (v0.1.8) with the FZF native extension and `ripgrep`.
+- **UI & Navigation**: `nvcode` colorscheme, `nvim-tree`, `nvim-web-devicons`, `nvim-lualine/lualine.nvim`, `harpoon` (harpoon2 branch), `undotree`.
+- **Search**: `telescope.nvim` (tag `0.1.8`) with the FZF native extension and `ripgrep`.
 - **Editing**: `Comment.nvim`, `vim-surround`, `ReplaceWithRegister`.
-- **Syntax & Trees**: `nvim-treesitter` with parsers for C, C#, CSS, Go, HTML, JavaScript, Lua, Markdown (including inline), Rust, Svelte, TypeScript, Vimscript; `nvim-treesitter/playground`; `jlcrochet/vim-cs` for C# helpers; `evanleck/vim-svelte` for Svelte support.
+- **Syntax & Trees**: `nvim-treesitter` (plus `playground`), `jlcrochet/vim-cs`, `evanleck/vim-svelte`.
 - **Git**: `vim-fugitive`.
-- **Language Tools**: `nvim-lspconfig`, `mason.nvim`, `mason-lspconfig.nvim`, completion stack (`nvim-cmp`, `cmp-nvim-lsp`, `cmp-buffer`, `cmp-path`, `cmp-nvim-lua`, `cmp_luasnip`), snippets (`LuaSnip`, `friendly-snippets`).
+- **Language Tools**: `nvim-lspconfig`, `mason.nvim`, `mason-lspconfig.nvim`, completion stack (`nvim-cmp`, `cmp-nvim-lsp`, `cmp-buffer`, `cmp-path`, `cmp-nvim-lua`, `cmp_luasnip`), snippets (`LuaSnip`, `friendly-snippets`), Java tooling (`mfussenegger/nvim-jdtls`), Kotlin/extra sources (`nvimtools/none-ls.nvim`), and Lua dev helpers (`folke/neodev.nvim`).
 - **Formatting**: `stevearc/conform.nvim` with language-specific formatters.
 - **Go**: `fatih/vim-go` (runs `:GoUpdateBinaries` on install).
 
@@ -67,14 +68,16 @@ Leader is `<Space>`. Selected highlights:
 
 ## Language Servers & Completion
 
-`after/plugin/lsp.lua` uses the native `vim.lsp.config` and `vim.lsp.enable` APIs with capabilities from `cmp_nvim_lsp`. Servers enabled on startup:
+`after/plugin/lsp.lua` uses the native `vim.lsp.config` + `vim.lsp.enable` APIs with capabilities from `cmp_nvim_lsp`. Servers explicitly configured:
 
-- `lua_ls` with LuaJIT runtime, Neovim runtime library, and telemetry disabled.
-- `rust_analyzer` with `allFeatures = true` and `clippy` checks on save.
-- `eslint` for JavaScript/TypeScript with auto-fix on save enabled.
-- `svelte` with support for svelte config files.
+- `lua_ls` with LuaJIT runtime, Neovim runtime library exposure, and telemetry disabled.
+- `rust_analyzer` with `allFeatures = true` and `clippy` on save.
+- `eslint` with auto-fix on save enabled for the JS/TS family.
+- `svelte`.
+- `ruby_lsp`.
+- `omnisharp` (configured but **not enabled**; supply the binary—`~/.local/share/nvim/mason/bin/OmniSharp` on macOS—and call `vim.lsp.enable('omnisharp')` if you want it).
 
-An OmniSharp configuration is provided but **not enabled** by default. It expects `~/.local/omnisharp/OmniSharp` and can be enabled by adding `vim.lsp.enable('omnisharp')` once the binary is present.
+The config also calls `vim.lsp.enable('jdtls')` and `vim.lsp.enable('kotlin_language_server')`, leaning on their default setups. Java buffers receive extra setup via `ftplugin/java.lua`, which builds the `jdtls` command and workspace path using project roots (`gradlew`, `mvnw`, `pom.xml`, `.git`). Update the launcher path there if Mason ships a JAR with a different version string.
 
 Completion is handled by `nvim-cmp` with LuaSnip and buffer/path/nvim_lua sources. Completion mappings include:
 - `<C-p>/<C-n>` - navigate items
@@ -99,28 +102,26 @@ Diagnostics display virtual text, signs, underlines with custom Nerd Font icons 
 
 ## Mason & Formatting
 
-`after/plugin/mason.lua` auto-installs language servers for `lua_ls`, `rust_analyzer`, `eslint`, `csharp_ls`, `gopls`, `ts_ls`, and `svelte` with automatic installation enabled. Update the list if you prefer OmniSharp over `csharp_ls`.
+`after/plugin/mason.lua` auto-installs language servers for `lua_ls`, `rust_analyzer`, `eslint`, `csharp_ls`, `gopls`, `kotlin_language_server`, `jdtls`, `ts_ls`, and `svelte`, keeping automatic installation enabled. Adjust the list if you prefer OmniSharp over `csharp_ls` or need additional tooling.
 
 `after/plugin/conform.lua` configures formatters by filetype:
 
 - **Lua**: `stylua`
-- **C#**: `csharpier` (using `dotnet-csharpier` command)
+- **C#**: `csharpier` (`dotnet-csharpier --write-stdout`)
 - **Rust**: `rustfmt`
 - **Go**: `goimports` + `gofmt`
-- **Svelte/CSS/HTML/JS/TS**: `prettier` (searches for plugins in project root, detects project via package.json, lock files, or svelte.config files)
-- **Ruby**: `rubyfmt` (via custom formatter system, opinionated formatter with minimal config)
+- **Svelte/CSS/HTML/JS/TS/React variants**: `prettier` (searches for plugins in the project root via package/lock files or Svelte config files)
 - **ERB**: `erb_format`
 
-Format on save is enabled for all languages except Ruby (which uses manual formatting only) with LSP fallback and 2-second timeout. `<leader>f` and `<leader>vcf` trigger manual formatting - they first check for custom formatters (defined in `lua/fabricio/formatters/`), then fall back to Conform with LSP fallback. The custom formatter system auto-registers all formatter configurations on startup.
+Format on save is enabled with Conform (LSP fallback, 2s timeout). Before Conform runs, the custom formatter framework (`lua/fabricio/formatters/`) is consulted: if it formats successfully the rest is skipped. The repo currently only includes the commented `ruby.lua` example, so no custom formatter is active until you add one. `<leader>f` and `<leader>vcf` share the same logic—custom formatter first, then Conform, finally LSP if required.
 
 ## Notes
 
 - `vim.opt.clipboard` append assumes Neovim is built with clipboard support.
 - The nvcode colorscheme is set directly in `after/plugin/colors.lua` with transparent backgrounds.
-- Update the OmniSharp path in `after/plugin/lsp.lua` if the binary lives elsewhere (note: there's a typo in the path using `˜` instead of `~`), and ensure the executable is marked as runnable. You'll need to manually enable it with `vim.lsp.enable('omnisharp')`.
+- Update the OmniSharp path in `after/plugin/lsp.lua` if the binary lives elsewhere, ensure it's executable, and call `vim.lsp.enable('omnisharp')` once present.
 - Conform expects these binaries on your `PATH`: `stylua`, `dotnet-csharpier`, `rustfmt`, `goimports`, `gofmt`, `prettier`, and `erb_format`.
-- Custom formatters expect: `rubyfmt` for Ruby formatting. Note: `rubyfmt` is opinionated and doesn't support `.rubocop.yml` configuration.
-- To add a new custom formatter, create a new file in `lua/fabricio/formatters/` that returns a table with `filetype`, `command`, `name`, and optionally `args` fields. It will be auto-registered on startup.
+- Custom formatter modules should return `{ filetype, command, name?, args? }` and live under `lua/fabricio/formatters/`; they register automatically during startup.
 - Harpoon uses version 2 (harpoon2 branch) with both quick menu (`<C-E>`) and Telescope integration (`<C-e>`).
 - Comment.nvim is enabled with default settings for easy code commenting.
 

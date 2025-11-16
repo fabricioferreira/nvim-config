@@ -66,13 +66,16 @@ vim.lsp.config('svelte', {
   capabilities = capabilities,
 })
 
+local omnisharp_path = vim.loop.os_uname() == "Linux" and '~/.local/omnisharp/OmniSharp' or '~/.local/share/nvim/mason/bin/OmniSharp'
+
 vim.lsp.config('omnisharp', {
   cmd = {
-    "˜/.local/omnisharp/OmniSharp",
+    omnisharp_path,
     "--languageserver",
     "--hostPID",
     tostring(vim.fn.getpid()),
   },
+  root_markers = { 'packages.json', '*.csproj' },
   enable_editorconfig_support = true,
   enable_ms_build_load_projects_on_demand = false,
   enable_roslyn_analyzers = true,
@@ -89,13 +92,14 @@ vim.lsp.config('ruby_lsp', {
   single_file_support = true,
 })
 
-
 -- Enable the language servers
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('eslint')
 vim.lsp.enable('svelte')
 vim.lsp.enable('ruby_lsp')
+vim.lsp.enable('jdtls')
+vim.lsp.enable('kotlin_language_server')
 
 -- Set up nvim-cmp
 local cmp = require('cmp')
@@ -109,6 +113,10 @@ cmp.setup({
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
@@ -134,9 +142,9 @@ cmp.setup({
     end, { 'i', 's' }),
   }),
   sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'luasnip' },
-      { name = 'nvim_lua' },
+      { name = 'nvim_lsp', priority = 900 },
+      { name = 'luasnip', priority = 1000 },
+      { name = 'nvim_lua', priority = 700 },
     },
     {
       { name = 'buffer' },

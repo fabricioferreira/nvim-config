@@ -7,6 +7,7 @@ require 'nvim-treesitter.configs'.setup {
     "go",
     "html",
     "javascript",
+    "kotlin",
     "lua",
     "markdown",
     "markdown_inline",
