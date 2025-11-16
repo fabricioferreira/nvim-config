@@ -1,6 +1,6 @@
 require("fabricio.remap")
 require("fabricio.set")
-require("fabricio.packer")
+require("fabricio.lazy")
 
 -- Setup custom formatters
 require("fabricio.formatters").setup()

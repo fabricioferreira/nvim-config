@@ -9,7 +9,7 @@ This setup lives in `~/.config/nvim` and is loaded from `init.lua`, which simply
   - `init.lua` → pulls in remaps, options, plugins, and formatter bootstrap.
   - `remap.lua` → all custom key bindings.
   - `set.lua` → editor options (UI, tabs, search, undo, etc.).
-  - `packer.lua` → plugin list and bootstrap logic.
+  - `lazy.lua` → plugin manager bootstrap and plugin specification.
   - `formatters/` → custom formatter implementations.
     - `init.lua` → generic formatter system that auto-registers modules in this directory.
     - `ruby.lua` → commented example showing how to register `rubyfmt`.
@@ -18,7 +18,7 @@ This setup lives in `~/.config/nvim` and is loaded from `init.lua`, which simply
 
 ## Plugin Management
 
-Packer installs itself on first load (`lua/fabricio/packer.lua`) and manages the plugin collection. Run `:PackerSync` after editing the plugin list.
+Lazy.nvim bootstraps itself from `lua/fabricio/lazy.lua` and manages the plugin collection. Run `:Lazy sync` after editing the plugin list (or `:Lazy restore`/`:Lazy check` as needed).
 
 Highlighted plugins:
 
