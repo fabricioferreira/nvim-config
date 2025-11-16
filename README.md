@@ -13,7 +13,7 @@ This setup lives in `~/.config/nvim` and is loaded from `init.lua`, which simply
   - `formatters/` → custom formatter implementations.
     - `init.lua` → generic formatter system that auto-registers modules in this directory.
     - `ruby.lua` → commented example showing how to register `rubyfmt`.
-- `after/plugin/` → per-plugin configuration (telescope, nvim-tree, lualine, LSP, conform, etc.).
+- `after/plugin/` → per-plugin configuration (telescope, neo-tree, lualine, LSP, conform, etc.).
 - `ftplugin/java.lua` → on-attaching Java helper that configures `jdtls` for Gradle/Maven/git projects.
 
 ## Plugin Management
@@ -22,7 +22,7 @@ Lazy.nvim bootstraps itself from `lua/fabricio/lazy.lua` and manages the plugin 
 
 Highlighted plugins:
 
-- **UI & Navigation**: `nvcode` colorscheme, `nvim-tree`, `nvim-web-devicons`, `nvim-lualine/lualine.nvim`, `harpoon` (harpoon2 branch), `undotree`.
+- **UI & Navigation**: `nvcode` colorscheme, `neo-tree`, `nvim-web-devicons`, `nvim-lualine/lualine.nvim`, `harpoon` (harpoon2 branch), `undotree`.
 - **Search**: `telescope.nvim` (tag `0.1.8`) with the FZF native extension and `ripgrep`.
 - **Editing**: `Comment.nvim`, `vim-surround`, `ReplaceWithRegister`.
 - **Syntax & Trees**: `nvim-treesitter` (plus `playground`), `jlcrochet/vim-cs`, `evanleck/vim-svelte`.
@@ -46,7 +46,7 @@ Highlighted plugins:
 
 Leader is `<Space>`. Selected highlights:
 
-- **Explorer**: `<leader>pv` (netrw), `<leader>e` (toggle NvimTree), `<leader>ef` (focus tree), `<leader>vb` enters visual block mode quickly.
+- **Explorer**: `<leader>pv` (netrw), `<leader>e` (toggle Neo-tree sidebar), `<leader>ef` (focus tree), `<leader>vb` enters visual block mode quickly.
 - **Telescope**: `<leader>ff` (find files), `<C-p>` (git files), `<leader>fs` (live grep), `<leader>ps` (prompted grep).
 - **Window/Tab control**: `<leader>sv` (split vertical), `<leader>sh` (split horizontal), `<leader>se` (equal splits), `<leader>sx` (close split), `<leader>to` (new tab), `<leader>tx` (close tab), `<leader>tn` (next tab), `<leader>tp` (previous tab).
 - **Harpoon**: `<leader>a` (add file), `<C-e>` (toggle quick menu or Telescope picker), `<C-h/j/k/l>` (select slots 1-4), `<C-S-P/N>` (cycle prev/next).
@@ -60,7 +60,7 @@ Leader is `<Space>`. Selected highlights:
 
 ## Colors & UI
 
-`after/plugin/colors.lua` sets the `nvcode` colorscheme and forces transparent backgrounds for Normal and NormalFloat highlights. NvimTree auto-scrolls to the current buffer on entry (`BufEnter` autocmd), highlights opened files, and shows modified file icons. Lualine uses a customized Nightfly palette with custom colors for normal (blue), insert (green), visual (violet), and command (yellow) modes (`after/plugin/lua-line.lua`).
+`after/plugin/colors.lua` sets the `nvcode` colorscheme and forces transparent backgrounds for Normal and NormalFloat highlights. Neo-tree (`after/plugin/neo-tree.lua`) replaces netrw, follows the current buffer, shows git/diagnostic status badges, and keeps `.git` hidden while leaving other dotfiles visible. Lualine uses a customized Nightfly palette with custom colors for normal (blue), insert (green), visual (violet), and command (yellow) modes (`after/plugin/lua-line.lua`).
 
 ## Treesitter
 

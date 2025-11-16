@@ -26,15 +26,16 @@ conform.setup({
 		local filetype = vim.bo[bufnr].filetype
 		
 		-- Check if this filetype has a custom formatter (handled manually)
-		for _, formatter_file in ipairs(vim.fn.glob(vim.fn.stdpath('config') .. '/lua/fabricio/formatters/*.lua', false, true)) do
-			local filename = vim.fn.fnamemodify(formatter_file, ':t:r')
-			if filename ~= 'init' then
-				local ok, config = pcall(require, 'fabricio.formatters.' .. filename)
-				if ok and config.filetype == filetype then
-					return -- Disable format-on-save for this filetype
-				end
+	for _, formatter_file in ipairs(vim.fn.glob(vim.fn.stdpath('config') .. '/lua/fabricio/formatters/*.lua', false, true)) do
+		local filename = vim.fn.fnamemodify(formatter_file, ':t:r')
+		if filename ~= 'init' then
+			local ok, config = pcall(require, 'fabricio.formatters.' .. filename)
+			-- Require returns `true` when a module doesn't return a table; guard before indexing
+			if ok and type(config) == "table" and config.filetype == filetype then
+				return -- Disable format-on-save for this filetype
 			end
 		end
+	end
 		
 		return {
 			lsp_fallback = true,
