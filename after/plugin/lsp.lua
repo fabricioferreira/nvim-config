@@ -66,7 +66,8 @@ vim.lsp.config('svelte', {
   capabilities = capabilities,
 })
 
-local omnisharp_path = vim.loop.os_uname() == "Linux" and '~/.local/omnisharp/OmniSharp' or '~/.local/share/nvim/mason/bin/OmniSharp'
+local omnisharp_path = vim.loop.os_uname() == "Linux" and '~/.local/omnisharp/OmniSharp' or
+    '~/.local/share/nvim/mason/bin/OmniSharp'
 
 vim.lsp.config('omnisharp', {
   cmd = {
@@ -92,6 +93,30 @@ vim.lsp.config('ruby_lsp', {
   single_file_support = true,
 })
 
+vim.lsp.config('terraformls', {
+  cmd = { 'terraform-ls', 'serve' },
+  filetypes = { 'terraform', 'terraform-vars', 'hcl' },
+  root_markers = { '.terraform', '.git', 'main.tf' },
+  settings = {
+    terraform = {
+      -- Enable experimental features
+      experimentalFeatures = {
+        validateOnSave = true,
+        prefillRequiredFields = true,
+      },
+      -- Validation settings
+      validation = {
+        enableEnhancedValidation = true,
+      },
+      -- Code lens settings
+      codelens = {
+        referenceCount = true,
+      },
+    },
+  },
+  capabilities = capabilities,
+})
+
 -- Enable the language servers
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('rust_analyzer')
@@ -100,6 +125,7 @@ vim.lsp.enable('svelte')
 vim.lsp.enable('ruby_lsp')
 vim.lsp.enable('jdtls')
 vim.lsp.enable('kotlin_language_server')
+vim.lsp.enable('terraformls')
 
 -- Set up nvim-cmp
 local cmp = require('cmp')
@@ -143,7 +169,7 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
       { name = 'nvim_lsp', priority = 900 },
-      { name = 'luasnip', priority = 1000 },
+      { name = 'luasnip',  priority = 1000 },
       { name = 'nvim_lua', priority = 700 },
     },
     {
@@ -188,7 +214,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         return
       end
       vim.lsp.buf.format({ async = true })
-    end, opts)                                                                               -- Format code
+    end, opts) -- Format code
   end,
 })
 

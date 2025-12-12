@@ -19,6 +19,9 @@ conform.setup({
 		typescriptreact = { "prettier" },
 		javascriptreact = { "prettier" },
 		eruby = { "erb_format" },
+		terraform = { "terraform_fmt" },
+		["terraform-vars"] = { "terraform_fmt" },
+		hcl = { "terraform_fmt" },
 	},
 	format_on_save = function(bufnr)
 		-- Disable format-on-save for filetypes handled by custom formatters
@@ -62,6 +65,11 @@ conform.setup({
 				"svelte.config.ts",
 				"node_modules",
 			}),
+		},
+		terraform_fmt = {
+			command = "terraform",
+			args = { "fmt", "-" },
+			stdin = true,
 		},
 	},
 })
