@@ -1,10 +1,14 @@
+vim.hl.priorities.semantic_tokens = 95
+
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 
 vim.opt.nu = true
 
 -- linue numbers
-vim.opt.relativenumber = true
+vim.o.relativenumber = true
 vim.opt.number = true
+vim.o.numberwidth = 4
+
 
 -- tabstops
 vim.opt.tabstop = 2
@@ -13,7 +17,16 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 -- indentation
-vim.opt.smartindent = true
+vim.o.autoindent = true
+vim.o.smartindent = true
+
+vim.o.showmode = false
+vim.o.showtabline = 1
+vim.o.pumheight = 10
+vim.o.cmdheight = 1
+
+vim.o.smartcase = true
+vim.o.completeopt = "menuone,noselect"
 
 vim.opt.wrap = false
 vim.opt.cursorline = true
